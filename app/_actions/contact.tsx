@@ -1,15 +1,61 @@
-import ContactForm from "@/app/_components/ContactForm";
-import styles from "./page.module.css";
+"use server"
 
-export default function Page() {
-  return (
-    <div className={styles.container}>
-      <p className={styles.text}>
-        ご質問、ご相談は下記フォームよりお問い合わせください。
-        <br />
-        内容確認後、担当者より通常3営業日以内にご連絡いたします。
-      </p>
-      <ContactForm />
-    </div>
-  );
+function validationEmail(email: string) {
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return pattern.test(email);
+}
+
+export async function createContactData (_prevState: any, formData:
+  FormData) {
+  const rawFormData = {
+    lastname: formData.get("lastname") as string,
+    firstname: formData.get("firstname") as string,
+    company:  formData.get("company") as string,
+    email:  formData.get("email") as string,
+    message:  formData.get("message") as string,
+  };
+
+if (!rawFormData.lastname){
+  return {
+    status:"error",
+    message: "姓を入力してください",
+  };
+}
+if (!rawFormData.firstname){
+  return {
+    status:"error",
+    message: "名を入力してください",
+  };
+}
+if (!rawFormData.lastname){
+  return {
+    status:"error",
+    message: "会社名を入力してください",
+  };
+}
+if (!rawFormData.company){
+  return {
+    status:"error",
+    message: "メールアドレスを入力してください",
+  };
+}
+if (!rawFormData.email){
+  return {
+    status:"error",
+    message: "メールアドレスを入力してください",
+  };
+}
+// if (!validateEmail(!rawFormData.email)){
+//   return {
+//     status:"error",
+//     message: "メールアドレスの形式が誤っています",
+//   };
+// }
+if (!rawFormData.message){
+  return {
+    status:"error",
+    message: "メッセージ入力してください",
+  };
+}
+return {status: "success", message:"OK"};
 }
