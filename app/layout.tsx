@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer";
 
+export const revalidate = 60;
+
 // const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata: Metadata = {
